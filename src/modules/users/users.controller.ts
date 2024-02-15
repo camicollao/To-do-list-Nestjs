@@ -5,6 +5,8 @@ import { UsersService } from './users.service';
 import { AuthGuard } from '../auth/guard/auth.guard';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../roles/roles.emun';
 
 @Controller('users')
 export class UsersController {
@@ -17,6 +19,7 @@ export class UsersController {
   }
 
   @UseGuards(AuthGuard)
+  @Roles(Role.Admin)
   @Post()
   create(@Body() createUserDto: CreateUserDto, 
   @Req() request: Request): 
