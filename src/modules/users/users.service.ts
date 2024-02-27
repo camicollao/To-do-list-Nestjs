@@ -29,6 +29,7 @@ export class UsersService {
         return user;
     }
 
+
     async create(CreateUserDto: CreateUserDto): Promise<User>{
         const salt = genSaltSync(6);
         const hashPassword = hashSync(CreateUserDto.password, salt);

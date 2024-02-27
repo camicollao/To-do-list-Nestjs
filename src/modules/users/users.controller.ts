@@ -13,13 +13,13 @@ export class UsersController {
   constructor(private readonly usersService: UsersService,
     private readonly jwtService: JwtService,) {}
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   findOneById(@Param('id', ParseIntPipe) id: number): Promise<User>{
     return this.usersService.findOneById(id);
   }
 
-  @UseGuards(AuthGuard)
-  @Roles(Role.Admin)
+
   @Post()
   create(@Body() createUserDto: CreateUserDto, 
   @Req() request: Request): 
@@ -31,5 +31,3 @@ export class UsersController {
   }
 
 }
-
-//roles, dockerizar, utilizar git

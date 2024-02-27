@@ -9,6 +9,18 @@ services:
       - PORT=3000
     volumes:
       - ./src:/usr/src/app/src
+  todo-dev:
+    build: 
+      context: .
+      target: development
+    ports:
+      - '3000:3000'
+    environment:
+      - PORT=3000
+    volumes:
+      - C:\Users\camic\Desktop\Practica\todonestjs\todolist\src:/usr/src/app/src
+    depends_on:
+      - mysql_db
   mysql_db:
     image: mysql
     ports:
