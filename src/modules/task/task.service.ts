@@ -17,7 +17,6 @@ export class TaskService {
   }
 
   async findAll(): Promise<Task[]> {
-    console.log('hola');
     return this.taskRepository.find();
   }
 
@@ -31,7 +30,6 @@ export class TaskService {
   }
 
   async update(id: number, task: UpdateTaskDto) {
-    console.log(id, task)
     const taskFound = this.taskRepository.findOne({where: {id}})
     if(!taskFound){
       throw new HttpException('La tarea no existe', HttpStatus.NOT_FOUND)

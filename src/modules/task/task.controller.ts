@@ -1,4 +1,4 @@
-import { Controller, Get,Patch, Post, Body, Param, Delete, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Controller, Get,Patch, Post, Body, Param, Delete, ParseIntPipe} from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { Task } from './entities/task.entity';

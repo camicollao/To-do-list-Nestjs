@@ -14,9 +14,9 @@ services:
       context: .
       target: development
     ports:
-      - '3000:3000'
+      - '3003:3003'
     environment:
-      - PORT=3000
+      - PORT=3003
     volumes:
       - C:\Users\camic\Desktop\Practica\todonestjs\todolist\src:/usr/src/app/src
     depends_on:

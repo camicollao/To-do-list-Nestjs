@@ -1,13 +1,18 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/users.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import {hashSync, genSaltSync} from 'bcrypt';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
     constructor(@InjectRepository(User) private readonly usersRepository: Repository<User>){}
+
+    async findAll(): Promise<User[]>{
+        return this.usersRepository.find();
+    }
 
     async findOneById(id: number): Promise<User>{
         const user = await this.usersRepository.findOne({
@@ -35,5 +40,21 @@ export class UsersService {
         const hashPassword = hashSync(CreateUserDto.password, salt);
         CreateUserDto.password = hashPassword
         return await this.usersRepository.save(CreateUserDto);
+    }
+
+    async update(id: number, user: UpdateUserDto){
+        const userFound = this.usersRepository.findOne({where: {id}})
+        if(!userFound){
+            throw new HttpException('El usuario no existe', HttpStatus.NOT_FOUND)
+        }
+        return this.usersRepository.update({id}, user); 
+    }
+
+    async delete(id: number): Promise<any> {
+        const userFound = this.usersRepository.findOne({where: {id}})
+        if(!userFound){
+            throw new HttpException('El usuario no existe', HttpStatus.NOT_FOUND)
+        }
+        return this.usersRepository.softDelete({id}); 
     }
 }
