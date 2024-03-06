@@ -1,9 +1,10 @@
-import { Controller, Get,Patch, Post, Body, Param, Delete, ParseIntPipe} from '@nestjs/common';
+import { Controller, Get,Patch, Post, Body, Param, Delete, ParseIntPipe, UseGuards} from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { Task } from './entities/task.entity';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '../auth/guard/auth.guard';
 
 
 
@@ -12,7 +13,7 @@ export class TaskController {
   constructor(private readonly taskService: TaskService,
     private readonly jwtService: JwtService) {}
   
-
+  @UseGuards(AuthGuard)
   @Post('/')
   async create(@Body() newTask: CreateTaskDto) : Promise<any> {
     this.taskService.create(newTask);
@@ -22,12 +23,14 @@ export class TaskController {
     });
   }
 
+  @UseGuards(AuthGuard)
   @Get('/')
   async findAll() : Promise<Task[]>{
     return this.taskService.findAll();
   }
 
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async find(@Param('id', ParseIntPipe) id : number) : Promise<Task> {
   return this.taskService.findOne(id);
@@ -44,7 +47,6 @@ export class TaskController {
   //   });
   // }
 
-
   @Patch(':id')
   async update(@Param('id', ParseIntPipe) id: number, @Body() task: UpdateTaskDto) {
     await this.taskService.update(id, task);
@@ -53,7 +55,6 @@ export class TaskController {
       updatedTask: task
     })
   }
-
 
   @Delete(':id')
   async remove( @Param('id', ParseIntPipe) id: number) : Promise<any> {
