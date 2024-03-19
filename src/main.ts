@@ -11,6 +11,7 @@ async function bootstrap() {
       transform: true //transforma a instancias de clase
     })
   );
+  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();
