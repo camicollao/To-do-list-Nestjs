@@ -20,19 +20,14 @@ export class UsersController {
     return this.usersService.findOneById(id);
   }
 
-  @UseGuards(AuthGuard)
   @Get('/')
   findAll(): Promise<User[]>{
     return this.usersService.findAll();
   }
 
   @Post('/')
-  create(@Body() createUserDto: CreateUserDto, 
-  @Req() request: Request): 
+  create(@Body() createUserDto: CreateUserDto): 
   Promise<User>{
-    const token = request.headers.authorization.split(' ')[1];
-    const data = this.jwtService.decode(token);
-    console.log(data);
     return this.usersService.create(createUserDto);
   }
 
