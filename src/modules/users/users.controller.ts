@@ -5,7 +5,6 @@ import {UpdateUserDto} from 'src/modules/users/dto/update-user.dto';
 import { UsersService } from './users.service';
 import { AuthGuard } from '../auth/guard/auth.guard';
 import { JwtService } from '@nestjs/jwt';
-import { Request } from 'express';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../roles/roles.emun';
 
